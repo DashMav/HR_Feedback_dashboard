@@ -42,7 +42,7 @@ A modern, secure feedback management system for internal team communication betw
 
 ### Prerequisites
 - Node.js 18+ and npm
-- Python 3.11+
+- Python 3.10  [use something lower than 3.11 as newer versions cause dep issues] 
 - Docker (optional)
 
 ### Frontend Setup
