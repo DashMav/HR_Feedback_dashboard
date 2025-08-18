@@ -1,18 +1,5 @@
-# Python virtual env inside backend
-backend/venv/
-
-# Node modules inside frontend
+# Node modules
 node_modules/
 
-# OS & editor cruft
-__pycache__/
-*.py[cod]
-.DS_Store
-.vscode/
-.idea/
-
-# Env files
-*.env
-
-# Logs
-*.log
+# Build output
+dist/
