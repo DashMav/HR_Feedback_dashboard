@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info
+.Python
+build/
+dist/
+venv/
+env/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Environment variables
+.env
+
+# Logs
+*.log
+
+# VSCode
+.vscode/
+
+# OS & editor cruft
+.DS_Store
