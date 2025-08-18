@@ -26,3 +26,5 @@ env/
 
 # OS & editor cruft
 .DS_Store
+
+project/backend/feedback.db
