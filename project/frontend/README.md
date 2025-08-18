@@ -160,29 +160,45 @@ Once the backend is running, visit `http://localhost:8000/docs` for interactive 
 
 ## Deployment
 
-### Frontend Deployment
-The frontend can be deployed to any static hosting service:
+This project is designed for free deployment with the frontend on Vercel and the backend on Hugging Face Spaces.
 
-```bash
-npm run build
-# Deploy the 'dist' folder to your hosting service
-```
+### Environment Variables
 
-### Backend Deployment
-The backend includes a Dockerfile for easy deployment:
+**Frontend (Vercel):**
+Set the `VITE_API_URL` environment variable in your Vercel project settings to point to your deployed Hugging Face Spaces backend URL.
 
-```bash
-# Build and run with Docker
-docker build -t feedback-system .
-docker run -p 8000:8000 feedback-system
-```
+**Backend (Hugging Face Spaces):**
+Set the `FRONTEND_URL` environment variable in your Hugging Face Spaces project settings to your deployed Vercel frontend URL for CORS configuration.
 
-For production, consider:
-- Using PostgreSQL instead of SQLite
-- Setting up proper environment variables
-- Implementing proper logging
-- Adding rate limiting
-- Setting up HTTPS
+### Frontend Deployment (Vercel)
+
+1.  **Push to GitHub**: Ensure your `project/frontend` directory is pushed to a GitHub repository.
+2.  **Connect to Vercel**:
+    *   Go to Vercel and import your Git repository.
+    *   When configuring the project, select the `frontend` directory as the root directory.
+    *   Vercel will automatically detect it as a Vite project and set the build command (`npm run build`) and output directory (`dist`).
+    *   Add the `VITE_API_URL` environment variable in the Vercel dashboard, pointing to your Hugging Face Spaces backend URL (e.g., `https://YOUR-SPACE-NAME.hf.space/api`).
+3.  **Deploy**: Vercel will build and deploy your frontend.
+
+### Backend Deployment (Hugging Face Spaces)
+
+1.  **Push to GitHub**: Ensure your `project/backend` directory is pushed to a GitHub repository.
+2.  **Create a New Space**:
+    *   Go to Hugging Face Spaces and create a new Space.
+    *   Choose "Docker" as the Space SDK.
+    *   Connect your Git repository.
+    *   Ensure the `backend` directory is the root of your Space repository.
+3.  **Configure Environment Variables**:
+    *   In your Hugging Face Space settings, add the `FRONTEND_URL` environment variable, pointing to your Vercel frontend URL (e.g., `https://your-vercel-app.vercel.app`).
+4.  **Deployment**: Hugging Face Spaces will automatically build and deploy your FastAPI application using the provided `Dockerfile` (or `requirements.txt` and `app.py` if you choose that route). The `/health` endpoint can be used to verify deployment.
+
+### Post-Deployment Integration
+
+Once both the frontend and backend are deployed:
+
+1.  **Update Frontend API URL**: If you haven't already, ensure the `VITE_API_URL` in your Vercel environment variables is set to the public URL of your Hugging Face Spaces backend (e.g., `https://YOUR-SPACE-NAME.hf.space/api`).
+2.  **Update Backend CORS**: Ensure the `FRONTEND_URL` in your Hugging Face Spaces environment variables is set to the public URL of your Vercel frontend (e.g., `https://your-vercel-app.vercel.app`).
+3.  **Test**: Access your Vercel frontend URL and test the full application workflow (login, feedback submission, etc.) to ensure seamless communication with the backend.
 
 ## Future Enhancements
 
