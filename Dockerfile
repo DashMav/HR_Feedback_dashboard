@@ -12,7 +12,7 @@ COPY project/backend/requirements.txt ./requirements.txt
 RUN pip install -r requirements.txt
 
 # Copy backend code
-COPY backend /.
+COPY project/backend /.
 
 # Create directory for SQLite database
 RUN mkdir -p /app/data
