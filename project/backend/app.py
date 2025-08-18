@@ -496,6 +496,10 @@ def get_dashboard_stats(current_user: User = Depends(get_current_user), db: Sess
         "sentiment_distribution": sentiment_dist
     }
 
+@app.get("/")
+def health_check():
+    return {"status": "ok"}
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
