@@ -12,7 +12,7 @@ COPY project/backend/requirements.txt ./requirements.txt
 RUN pip install -r requirements.txt
 
 # Copy backend code
-COPY project/backend /.
+COPY project/backend/ .
 
 # Create directory for SQLite database
 RUN mkdir -p /app/data
@@ -25,4 +25,4 @@ ENV DATABASE_URL=sqlite:///./data/feedback.db
 ENV SECRET_KEY=your-production-secret-key-change-this
 
 # Run the FastAPI app
-CMD ["uvicorn", "backend.app:app", "--host", "0.0.0.0", "--port", "7860"]
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "7860"]
