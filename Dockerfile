@@ -15,7 +15,7 @@ RUN pip install -r requirements.txt
 COPY project/backend/ .
 
 # Create directory for SQLite database
-RUN mkdir -p /app/data
+RUN mkdir -p /app/data && chmod -R 777 /app/data
 
 # Expose port (HF Spaces prefers 7860 or 8080)
 EXPOSE 7860
