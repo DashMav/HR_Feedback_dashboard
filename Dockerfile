@@ -8,11 +8,11 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements and install Python dependencies
-COPY backend/requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY backend/requirements.txt ./requirements.txt
+RUN pip install -r requirements.txt
 
 # Copy backend code
-COPY backend /app
+COPY backend /.
 
 # Create directory for SQLite database
 RUN mkdir -p /app/data
