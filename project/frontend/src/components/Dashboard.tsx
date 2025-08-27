@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { api } from '../services/api';
-import { Employee, DashboardStats, Feedback } from '../types';
+import { Employee, DashboardStats, Feedback } from '@/types';
 import ManagerDashboard from './ManagerDashboard';
 import EmployeeDashboard from './EmployeeDashboard';
+import AdminDashboard from './AdminDashboard';
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -18,7 +19,7 @@ export default function Dashboard() {
 
   const fetchDashboardData = async () => {
     try {
-      if (user?.role === 'manager') {
+      if (user?.role === 'manager' || user?.role === 'admin' || user?.role === 'owner') {
         const [employeesRes, statsRes] = await Promise.all([
           api.get('/employees'),
           api.get('/dashboard/stats')
@@ -46,12 +47,20 @@ export default function Dashboard() {
 
   return (
     <div>
-      {user?.role === 'manager' ? (
+      {user?.role === 'manager' || user?.role === 'admin' || user?.role === 'owner' ? (
+        user?.role === 'owner' || user?.role === 'admin' ? (
+          <AdminDashboard 
+            employees={employees} 
+            stats={stats} 
+            onRefresh={fetchDashboardData}
+          />
+        ) : (
         <ManagerDashboard 
           employees={employees} 
           stats={stats} 
           onRefresh={fetchDashboardData}
         />
+        )
       ) : (
         <EmployeeDashboard 
           feedback={feedback} 

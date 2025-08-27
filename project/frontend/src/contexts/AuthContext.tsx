@@ -5,13 +5,16 @@ export interface User {
   id: number;
   email: string;
   name: string;
-  role: 'manager' | 'employee';
+  role: 'owner' | 'admin' | 'manager' | 'employee';
+  organization_id: number;
   manager_id?: number;
+  is_active: boolean;
+  last_login?: string;
 }
 
 interface AuthContextType {
   user: User | null;
-  login: (email: string, password: string) => Promise<void>;
+  login: (email: string, password: string, organizationId?: number) => Promise<void>;
   logout: () => void;
   loading: boolean;
 }
@@ -56,8 +59,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   };
 
-  const login = async (email: string, password: string) => {
-    const response = await api.post('/auth/login', { email, password });
+  const login = async (email: string, password: string, organizationId?: number) => {
+    const response = await api.post('/auth/login', { 
+      email, 
+      password,
+      organization_id: organizationId 
+    });
     const { token, user: userData } = response.data;
     
     localStorage.setItem('token', token);
